@@ -32,7 +32,7 @@ export default function Footer({ setPage }) {
 
           <div>
             <p style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 14, color: '#f0ede8', letterSpacing: 2, marginBottom: 12 }}>Contacto</p>
-            <p style={{ fontSize: 13, color: '#5a5a64', marginBottom: 6 }}>+34 614 32 16 94</p>
+            <p style={{ fontSize: 13, color: '#5a5a64', marginBottom: 6 }}>+34 654 74 81 17</p>
             <p style={{ fontSize: 13, color: '#5a5a64', marginBottom: 6 }}>info@jtransnoroeste.com</p>
             <p style={{ fontSize: 13, color: '#5a5a64', marginBottom: 6 }}>Madrid · España</p>
             <p style={{ fontSize: 13, color: '#5a5a64' }}>Lun–Dom · 9:00–21:00</p>
