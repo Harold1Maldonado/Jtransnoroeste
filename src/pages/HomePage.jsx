@@ -183,10 +183,6 @@ export default function HomePage({ setPage }) {
                   <button onClick={() => setPage('Presupuesto')}>Cotizar transporte</button>
                 </div>
               </div>
-              <div className="hero-scroll-note">
-                <span>Video controlado por scroll</span>
-                <strong>La ruta avanza contigo</strong>
-              </div>
             </div>
           </div>
 
