@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Icon from '../components/Icon.jsx'
 import { PageWrapper, PageHeader, FormField } from '../components/helpers.jsx'
-import { GOLD, PHONE, PHONE_RAW, EMAIL, WA_URL } from '../tokens.js'
+import { GOLD, PHONE, PHONE_RAW, PHONE2, PHONE2_RAW, PHONE3, PHONE3_RAW, EMAIL, WA_URL } from '../tokens.js'
 
 const INITIAL = {
   nombre: '', telefono: '', origen: '', destino: '',
@@ -17,6 +17,19 @@ export default function PresupuestoPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const msg =
+`🏍️ *SOLICITUD DE PRESUPUESTO – Jtransnoroeste*
+
+👤 Nombre: ${form.nombre}
+📞 Teléfono: ${form.telefono}
+📍 Origen: ${form.origen}
+🏁 Destino: ${form.destino}
+🏷️ Moto: ${form.marca || '—'} ${form.modelo || ''}
+📅 Fecha recogida: ${form.fecha || 'Sin especificar'}
+🔑 Arranca: ${form.arranca === 'si' ? 'Sí arranca' : 'No arranca / Averiada'}
+💬 Comentarios: ${form.comentarios || 'Ninguno'}`
+
+    window.open(`https://wa.me/${PHONE_RAW.replace('+', '')}?text=${encodeURIComponent(msg)}`, '_blank')
     setSent(true)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -35,7 +48,7 @@ export default function PresupuestoPage() {
             </div>
             <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, color: '#f0ede8', letterSpacing: 2, marginBottom: 12 }}>¡Solicitud enviada!</h2>
             <p style={{ color: '#a0a0aa', fontSize: 16, maxWidth: 440, margin: '0 auto 24px', lineHeight: 1.7 }}>
-              Hemos recibido tu solicitud. Te responderemos con presupuesto lo antes posible por WhatsApp o teléfono.
+              Tu solicitud ha sido enviada por WhatsApp. Te responderemos con presupuesto lo antes posible.
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href={WA_URL} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 28px', background: 'rgba(37,211,102,0.15)', border: '1px solid rgba(37,211,102,0.3)', borderRadius: 6, fontFamily: 'Barlow, sans-serif', fontWeight: 600, fontSize: 15, color: '#25d366', textDecoration: 'none' }}>
@@ -97,13 +110,15 @@ export default function PresupuestoPage() {
                 </span>
               </label>
 
-              <button type="submit" style={{ padding: 16, background: GOLD, border: 'none', borderRadius: 6, cursor: 'pointer', fontFamily: 'Barlow, sans-serif', fontWeight: 700, fontSize: 16, color: '#0d0f14', marginTop: 4 }}>
-                Enviar solicitud de presupuesto
+              <button type="submit" style={{ padding: 16, background: GOLD, border: 'none', borderRadius: 6, cursor: 'pointer', fontFamily: 'Barlow, sans-serif', fontWeight: 700, fontSize: 16, color: '#0d0f14', marginTop: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                <Icon name="whatsapp" size={18} color="#0d0f14" /> Enviar por WhatsApp
               </button>
             </form>
 
             {/* Sidebar */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+
+              {/* Teléfono principal */}
               <div style={{ background: '#141820', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: 24 }}>
                 <h3 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 20, color: GOLD, letterSpacing: 2, marginBottom: 16 }}>Contacto directo</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -119,14 +134,33 @@ export default function PresupuestoPage() {
                 </div>
               </div>
 
+              {/* Líneas adicionales */}
+              <div style={{ background: '#141820', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: 24 }}>
+                <h3 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 20, color: GOLD, letterSpacing: 2, marginBottom: 16 }}>Más teléfonos</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <div>
+                    <p style={{ fontSize: 11, color: '#5a5a64', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600, marginBottom: 4 }}>Línea 2</p>
+                    <a href={`tel:${PHONE2_RAW}`} style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#c0bdb8', textDecoration: 'none', fontSize: 15 }}>
+                      <Icon name="phone" size={16} color={GOLD} /> {PHONE2}
+                    </a>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: 11, color: '#5a5a64', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600, marginBottom: 4 }}>Línea 3</p>
+                    <a href={`tel:${PHONE3_RAW}`} style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#c0bdb8', textDecoration: 'none', fontSize: 15 }}>
+                      <Icon name="phone" size={16} color={GOLD} /> {PHONE3}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Horario */}
               <div style={{ background: '#141820', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: 24 }}>
                 <h3 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 20, color: '#f0ede8', letterSpacing: 2, marginBottom: 12 }}>Horario de atención</h3>
                 <p style={{ color: '#7a7a84', fontSize: 14, lineHeight: 1.7 }}>
-                  Atención comercial<br />
                   <span style={{ color: '#c0bdb8' }}>Lunes a Domingo</span><br />
-                  <span style={{ color: GOLD }}>9:00 – 21:00 h</span>
+                  <span style={{ color: GOLD, fontSize: 18, fontFamily: 'Bebas Neue, sans-serif', letterSpacing: 1 }}>24 h</span>
                 </p>
-                <p style={{ color: '#7a7a84', fontSize: 13, marginTop: 10 }}>Servicio de transporte operativo todos los días.</p>
+                <p style={{ color: '#7a7a84', fontSize: 13, marginTop: 8 }}>Estamos disponibles en todo momento.</p>
               </div>
 
               <div style={{ background: `rgba(200,168,75,0.06)`, border: `1px solid ${GOLD}22`, borderRadius: 10, padding: 20 }}>
