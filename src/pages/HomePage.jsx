@@ -1,18 +1,14 @@
 // src/pages/HomePage.jsx
-import { useEffect, useRef, useState } from 'react'
+import { useState, useRef } from 'react'
 import Icon from '../components/Icon.jsx'
 import BrandMark from '../components/BrandMark.jsx'
 import { SectionLabel } from '../components/helpers.jsx'
-import { GOLD, RED, WA_URL, PHONE, PHONE_RAW } from '../tokens.js'
-import heroVideo from '../../Van_rolling_down_202604261544.mp4'
-import vanLoading from '../../Furgoneta_blanca_cargando_202604261539.jpeg'
-import vanRoad from '../../Furgoneta_blanca_viajando.jpeg'
-import loadedBikes from '../../motos cargadas.jpeg'
+import { GOLD, RED, WA_URL, PHONE, PHONE_RAW, PHONE2, PHONE2_RAW, PHONE3, PHONE3_RAW } from '../tokens.js'
 
 const STATS = [
   { val: '24–72h', label: 'Plazo de entrega' },
   { val: '100%',  label: 'España peninsular' },
-  { val: '+500',  label: 'Motos transportadas' },
+  { val: '+2000', label: 'Motos transportadas' },
   { val: '24/7',  label: 'Servicio operativo' },
 ]
 
@@ -53,73 +49,73 @@ const FAQS = [
   { q: '¿Operáis en toda España?', a: 'Sí, cubrimos toda la España peninsular. Consúltanos para Baleares o Portugal.' },
 ]
 
-const GALLERY = [
-  { src: loadedBikes, title: 'Motos cargadas y sujetas', text: 'Sujeción específica para evitar movimientos durante el trayecto.' },
-  { src: vanLoading, title: 'Carga cuidada', text: 'Recogidas coordinadas en domicilio, taller o concesionario.' },
-  { src: vanRoad, title: 'Rutas nacionales', text: 'Cobertura en España peninsular con planificación de entregas.' },
+const GALLERY_ROW1 = [
+  { src: '/images/motos-cargadas.jpg',    title: 'Motos cargadas y sujetas', text: 'Sujeción específica para evitar movimientos durante el trayecto.' },
+  { src: '/images/furgoneta-cargando.jpg',title: 'Carga cuidada',            text: 'Recogidas coordinadas en domicilio, taller o concesionario.' },
+  { src: '/images/furgoneta-viajando.jpg',title: 'Rutas nacionales',         text: 'Cobertura en España peninsular con planificación de entregas.' },
 ]
 
-function ScrollHeroVideo() {
-  const wrapRef = useRef(null)
-  const videoRef = useRef(null)
-  const durationRef = useRef(0)
-  const rafRef = useRef(null)
+const GALLERY_ROW2 = [
+  { src: '/images/furgoneta-perfil.jpg', title: 'Nuestra furgoneta',  text: 'Vehículo equipado para el transporte seguro de motocicletas.' },
+  { src: '/images/motos-rampa.jpg',      title: 'Rampa de carga',      text: 'Sistema de acceso para facilitar la carga de cualquier tipo de moto.' },
+  { src: '/images/motos-camion.jpg',     title: 'Capacidad amplia',    text: 'Grupaje eficiente para reducir costes en rutas compartidas.' },
+  { src: '/images/quads.jpg',            title: 'También quads',       text: 'Transportamos quads y vehículos de cuatro ruedas a petición.' },
+]
 
-  useEffect(() => {
-    const video = videoRef.current
-    const wrap = wrapRef.current
-    if (!video || !wrap) return undefined
+const VIDEOS = [
+  { src: '/videos/0428.mp4', poster: '/images/motos-cargadas.jpg',     title: 'Carga y preparación',  text: 'Así aseguramos cada moto antes de salir.' },
+  { src: '/videos/0429.mp4', poster: '/images/furgoneta-viajando.jpg', title: 'Transporte en ruta',   text: 'Vídeo real de una entrega en ruta nacional.' },
+]
 
-    const update = () => {
-      rafRef.current = null
-      const duration = durationRef.current || video.duration || 0
-      if (!duration) return
+function HeroBg() {
+  return (
+    <div
+      className="hero-video-bg"
+      aria-hidden="true"
+      style={{
+        backgroundImage: 'url(/images/foto-hero.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    />
+  )
+}
 
-      const rect = wrap.getBoundingClientRect()
-      const travel = window.innerHeight + rect.height
-      const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / travel))
-      const target = progress * Math.max(0, duration - 0.05)
+function VideoCard({ src, poster, title, text }) {
+  const ref = useRef(null)
+  const [playing, setPlaying] = useState(false)
 
-      if (Number.isFinite(target) && Math.abs(video.currentTime - target) > 0.04) {
-        video.currentTime = target
-      }
-    }
-
-    const requestUpdate = () => {
-      if (rafRef.current) return
-      rafRef.current = window.requestAnimationFrame(update)
-    }
-
-    const onLoaded = () => {
-      durationRef.current = video.duration || 0
-      requestUpdate()
-    }
-
-    video.pause()
-    video.addEventListener('loadedmetadata', onLoaded)
-    window.addEventListener('scroll', requestUpdate, { passive: true })
-    window.addEventListener('resize', requestUpdate)
-    requestUpdate()
-
-    return () => {
-      video.removeEventListener('loadedmetadata', onLoaded)
-      window.removeEventListener('scroll', requestUpdate)
-      window.removeEventListener('resize', requestUpdate)
-      if (rafRef.current) window.cancelAnimationFrame(rafRef.current)
-    }
-  }, [])
+  const toggle = () => {
+    const v = ref.current
+    if (!v) return
+    if (v.paused) { v.play(); setPlaying(true) }
+    else          { v.pause(); setPlaying(false) }
+  }
 
   return (
-    <div ref={wrapRef} className="hero-video-bg" aria-hidden="true">
+    <div style={{ position: 'relative', borderRadius: 10, overflow: 'hidden', background: '#141820', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer' }} onClick={toggle}>
       <video
-        ref={videoRef}
-        src={heroVideo}
-        muted
+        ref={ref}
+        src={src}
+        poster={poster}
         playsInline
-        preload="metadata"
-        poster={vanRoad}
-        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        loop
+        preload="none"
+        style={{ width: '100%', display: 'block', aspectRatio: '16/9', objectFit: 'cover' }}
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
       />
+      {!playing && (
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, transparent 40%, rgba(7,8,12,0.88))' }}>
+          <div style={{ width: 64, height: 64, borderRadius: '50%', background: `rgba(200,168,75,0.92)`, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 0 0 8px rgba(200,168,75,0.2)` }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#0d0f14"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      )}
+      <div style={{ position: 'absolute', left: 18, right: 18, bottom: 18, pointerEvents: 'none' }}>
+        <h3 style={{ fontFamily: 'Bebas Neue, sans-serif', color: '#f0ede8', letterSpacing: 2, fontSize: 22, marginBottom: 4 }}>{title}</h3>
+        <p style={{ color: '#c0bdb8', fontSize: 13, lineHeight: 1.5 }}>{text}</p>
+      </div>
     </div>
   )
 }
@@ -131,7 +127,7 @@ export default function HomePage({ setPage }) {
     <div>
       {/* ── HERO ── */}
       <section className="home-hero" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', overflow: 'hidden', background: '#0d0f14', paddingTop: 80 }}>
-        <ScrollHeroVideo />
+        <HeroBg />
         <div className="hero-video-shade" />
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)` }} />
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 75% 30%, rgba(200,168,75,0.1), transparent 34%), linear-gradient(90deg, rgba(13,15,20,0.92) 0%, rgba(13,15,20,0.72) 48%, rgba(13,15,20,0.26) 100%)' }} />
@@ -162,16 +158,35 @@ export default function HomePage({ setPage }) {
                 ))}
               </div>
 
-              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 16 }}>
                 <button onClick={() => setPage('Presupuesto')} style={{ padding: '16px 32px', background: GOLD, border: 'none', borderRadius: 6, cursor: 'pointer', fontFamily: 'Barlow, sans-serif', fontWeight: 700, fontSize: 16, color: '#0d0f14', display: 'flex', alignItems: 'center', gap: 8 }}>
                   Solicitar presupuesto <Icon name="arrowRight" size={18} color="#0d0f14" />
                 </button>
                 <a href={WA_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '16px 28px', background: 'rgba(37,211,102,0.12)', border: '1px solid rgba(37,211,102,0.3)', borderRadius: 6, fontFamily: 'Barlow, sans-serif', fontWeight: 600, fontSize: 16, color: '#25d366', display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
                   <Icon name="whatsapp" size={20} color="#25d366" /> WhatsApp
                 </a>
-                <a href={`tel:${PHONE_RAW}`} style={{ padding: '16px 28px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 6, fontFamily: 'Barlow, sans-serif', fontWeight: 500, fontSize: 16, color: '#f0ede8', display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
-                  <Icon name="phone" size={18} /> {PHONE}
-                </a>
+              </div>
+
+              {/* Tarjetas de teléfono */}
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                {[
+                  { label: 'Principal · WA', value: PHONE,  raw: PHONE_RAW  },
+                  { label: 'Línea 2',        value: PHONE2, raw: PHONE2_RAW },
+                  { label: 'Línea 3',        value: PHONE3, raw: PHONE3_RAW },
+                ].map(p => (
+                  <a key={p.raw} href={`tel:${p.raw}`} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 16px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, textDecoration: 'none', transition: 'border-color 0.2s' }}
+                    onMouseEnter={e => e.currentTarget.style.borderColor = `${GOLD}55`}
+                    onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'}
+                  >
+                    <div style={{ width: 32, height: 32, borderRadius: 6, background: `${GOLD}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Icon name="phone" size={14} color={GOLD} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 10, color: '#5a5a64', letterSpacing: 1, textTransform: 'uppercase', fontWeight: 600, marginBottom: 2 }}>{p.label}</div>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: '#f0ede8', fontFamily: 'Barlow, sans-serif' }}>{p.value}</div>
+                    </div>
+                  </a>
+                ))}
               </div>
             </div>
 
@@ -198,7 +213,7 @@ export default function HomePage({ setPage }) {
         </div>
       </section>
 
-      {/* ── GALERIA ── */}
+      {/* ── GALERÍA ── */}
       <section style={{ padding: '80px 24px', background: '#10121a' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <SectionLabel>Galería real</SectionLabel>
@@ -211,8 +226,10 @@ export default function HomePage({ setPage }) {
               Pedir precio ahora
             </button>
           </div>
-          <div className="gallery-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.9fr 0.9fr', gap: 16 }}>
-            {GALLERY.map((item, i) => (
+
+          {/* Row 1: large | medium | medium */}
+          <div className="gallery-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.9fr 0.9fr', gap: 16, marginBottom: 16 }}>
+            {GALLERY_ROW1.map((item, i) => (
               <article key={item.title} className={i === 0 ? 'gallery-card gallery-card-large' : 'gallery-card'} style={{ position: 'relative', minHeight: i === 0 ? 420 : 300, overflow: 'hidden', borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: '#141820' }}>
                 <img src={item.src} alt={item.title} loading={i === 0 ? 'eager' : 'lazy'} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(7,8,12,0.92))' }} />
@@ -223,11 +240,43 @@ export default function HomePage({ setPage }) {
               </article>
             ))}
           </div>
+
+          {/* Row 2: 4 equal columns */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+            {GALLERY_ROW2.map((item) => (
+              <article key={item.title} style={{ position: 'relative', minHeight: 220, overflow: 'hidden', borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: '#141820' }}>
+                <img src={item.src} alt={item.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 35%, rgba(7,8,12,0.90))' }} />
+                <div style={{ position: 'absolute', left: 14, right: 14, bottom: 14 }}>
+                  <h3 style={{ fontFamily: 'Bebas Neue, sans-serif', color: '#f0ede8', letterSpacing: 1, fontSize: 18, marginBottom: 2 }}>{item.title}</h3>
+                  <p style={{ color: '#c0bdb8', fontSize: 12, lineHeight: 1.4 }}>{item.text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── VÍDEOS ── */}
+      <section style={{ padding: '80px 24px', background: '#0d0f14' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <SectionLabel>El proceso, en directo</SectionLabel>
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 24, alignItems: 'flex-end', flexWrap: 'wrap', marginBottom: 32 }}>
+            <div>
+              <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 'clamp(36px,4vw,56px)', color: '#f0ede8', letterSpacing: 2, marginBottom: 10 }}>Vídeos reales</h2>
+              <p style={{ color: '#7a7a84', maxWidth: 540, fontSize: 17 }}>Sin edición. Lo que ves es lo que hacemos en cada recogida y entrega.</p>
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20 }}>
+            {VIDEOS.map((v) => (
+              <VideoCard key={v.src} src={v.src} poster={v.poster} title={v.title} text={v.text} />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── SERVICIOS ── */}
-      <section style={{ padding: '80px 24px', background: '#0d0f14' }}>
+      <section style={{ padding: '80px 24px', background: '#10121a' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <SectionLabel>Nuestros servicios</SectionLabel>
           <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 'clamp(36px,4vw,56px)', color: '#f0ede8', marginBottom: 16, letterSpacing: 2 }}>Soluciones a medida</h2>
@@ -259,7 +308,7 @@ export default function HomePage({ setPage }) {
       </section>
 
       {/* ── PROCESO ── */}
-      <section style={{ padding: '80px 24px', background: '#10121a' }}>
+      <section style={{ padding: '80px 24px', background: '#0d0f14' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <SectionLabel>Cómo funciona</SectionLabel>
           <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 'clamp(36px,4vw,56px)', color: '#f0ede8', marginBottom: 48, letterSpacing: 2 }}>4 pasos, sin complicaciones</h2>
@@ -280,7 +329,7 @@ export default function HomePage({ setPage }) {
       </section>
 
       {/* ── CONFIANZA + TESTIMONIOS ── */}
-      <section style={{ padding: '80px 24px', background: '#0d0f14' }}>
+      <section style={{ padding: '80px 24px', background: '#10121a' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
           <div>
             <SectionLabel>Por qué elegirnos</SectionLabel>
@@ -316,7 +365,7 @@ export default function HomePage({ setPage }) {
       </section>
 
       {/* ── FAQ ── */}
-      <section style={{ padding: '80px 24px', background: '#10121a' }}>
+      <section style={{ padding: '80px 24px', background: '#0d0f14' }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
           <SectionLabel>Preguntas frecuentes</SectionLabel>
           <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 'clamp(36px,4vw,52px)', color: '#f0ede8', marginBottom: 40, letterSpacing: 2 }}>Todo lo que necesitas saber</h2>

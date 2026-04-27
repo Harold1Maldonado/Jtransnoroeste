@@ -6,21 +6,25 @@ import { GOLD, RED } from '../tokens.js'
 const SERVICES = [
   {
     title: 'Transporte individual puerta a puerta', icon: 'truck', color: GOLD,
+    img: '/images/nuestra-furgo.jpg',
     desc: 'Recogemos tu moto en la dirección que nos indiques y la entregamos directamente en su destino. Ideal para mudanzas, compras entre particulares o envíos a talleres.',
     items: ['Recogida en domicilio o punto acordado', 'Entrega en toda España peninsular', 'Seguimiento del envío', 'Seguro según condiciones del servicio', 'Plazo habitual 24–48 horas'],
   },
   {
     title: 'Grupaje de motos', icon: 'package', color: '#6ba4e0',
+    img: '/images/motos-camion.jpg',
     desc: 'Optimizamos las rutas agrupando varias motocicletas en un mismo trayecto, reduciendo costes y mejorando la eficiencia.',
     items: ['Rutas regulares en principales corredores', 'Tarifas más ajustadas', 'Planificación flexible de fechas', 'Servicio para particulares y empresas'],
   },
   {
     title: 'Logística para concesionarios y talleres', icon: 'users', color: '#7ecb8a',
+    img: '/images/motos-rampa.jpg',
     desc: 'Gestión recurrente de transporte de motos nuevas, usadas o en reparación, adaptándonos al volumen y frecuencia de tu negocio.',
     items: ['Recogida y entrega en concesionarios', 'Gestión de flotas y rotación de stock', 'Soluciones B2B personalizadas', 'Facturación mensual disponible'],
   },
   {
     title: 'Servicios complementarios', icon: 'map', color: RED,
+    img: '/images/quads.jpg',
     desc: 'Coordinación con servicios de venta de motos y recambios, para que todo el proceso logístico se gestione desde un único interlocutor.',
     items: ['Recepción y entrega en campas o almacenes', 'Coordinación de plazos con compraventas', 'Asesoramiento logístico'],
   },
@@ -63,9 +67,8 @@ export default function ServiciosPage({ setPage }) {
               </ul>
             </div>
             <div style={{ order: i % 2 === 1 ? 1 : 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ width: '100%', aspectRatio: '4/3', background: `linear-gradient(135deg,${s.color}10,${s.color}04)`, borderRadius: 8, border: `1px dashed ${s.color}30`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-                <Icon name={s.icon} size={48} color={s.color + '55'} />
-                <span style={{ fontFamily: 'monospace', fontSize: 11, color: s.color + '55', textAlign: 'center', padding: '0 16px' }}>imagen del servicio</span>
+              <div style={{ width: '100%', aspectRatio: '4/3', borderRadius: 8, overflow: 'hidden', border: `1px solid ${s.color}22` }}>
+                <img src={s.img} alt={s.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </div>
             </div>
           </div>
