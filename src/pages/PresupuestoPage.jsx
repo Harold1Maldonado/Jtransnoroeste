@@ -60,7 +60,7 @@ export default function PresupuestoPage() {
             </div>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: 32 }}>
+          <div className="presupuesto-grid" style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: 32 }}>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               <FormField label="Nombre completo" value={form.nombre} onChange={v => set('nombre', v)} required />
               <FormField label="Teléfono / WhatsApp" type="tel" value={form.telefono} onChange={v => set('telefono', v)} required />

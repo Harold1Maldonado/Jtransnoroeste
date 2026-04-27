@@ -104,7 +104,7 @@ button { font-family: 'Barlow', sans-serif; }
     min-height: auto;
     justify-content: flex-start;
   }
-  
+
   .hero-quote-card {
     margin-top: 14px;
     max-width: none;
@@ -112,6 +112,36 @@ button { font-family: 'Barlow', sans-serif; }
 
   .hero-scroll-note {
     display: none;
+  }
+
+  /* Trust + Testimonials 2-col → 1-col */
+  .trust-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ServiciosPage alternating grid → 1-col */
+  .service-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Presupuesto form + sidebar → stack */
+  .presupuesto-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Stats bar 4-col → 2-col */
+  .stats-bar {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Gallery row 2: 4-col → 2-col */
+  .gallery-row2 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Contact 3-col → 1-col */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 
@@ -127,5 +157,30 @@ button { font-family: 'Barlow', sans-serif; }
   .gallery-card,
   .gallery-card-large {
     min-height: 280px !important;
+  }
+
+  /* Stats bar 4-col → 1-col */
+  .stats-bar {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Gallery row 2: 2-col on small phones */
+  .gallery-row2 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Phone cards in hero → stack */
+  .phone-cards {
+    flex-direction: column !important;
+  }
+
+  /* Videos 2-col → 1-col */
+  .video-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Contact 3-col → 1-col */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
   }
 }

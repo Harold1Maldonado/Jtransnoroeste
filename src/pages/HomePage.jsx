@@ -168,7 +168,7 @@ export default function HomePage({ setPage }) {
               </div>
 
               {/* Tarjetas de teléfono */}
-              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <div className="phone-cards" style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                 {[
                   { label: 'Principal · WA', value: PHONE,  raw: PHONE_RAW  },
                   { label: 'Línea 2',        value: PHONE2, raw: PHONE2_RAW },
@@ -202,7 +202,7 @@ export default function HomePage({ setPage }) {
           </div>
 
           {/* Stats bar */}
-          <div style={{ marginTop: 60, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 1, background: `rgba(200,168,75,0.12)`, borderRadius: 8, overflow: 'hidden', border: `1px solid rgba(200,168,75,0.15)` }}>
+          <div className="stats-bar" style={{ marginTop: 60, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 1, background: `rgba(200,168,75,0.12)`, borderRadius: 8, overflow: 'hidden', border: `1px solid rgba(200,168,75,0.15)` }}>
             {STATS.map((s, i) => (
               <div key={i} style={{ padding: '20px 24px', background: 'rgba(13,15,20,0.8)', textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(200,168,75,0.12)' : 'none' }}>
                 <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, color: GOLD, letterSpacing: 2 }}>{s.val}</div>
@@ -242,7 +242,7 @@ export default function HomePage({ setPage }) {
           </div>
 
           {/* Row 2: 4 equal columns */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+          <div className="gallery-row2" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
             {GALLERY_ROW2.map((item) => (
               <article key={item.title} style={{ position: 'relative', minHeight: 220, overflow: 'hidden', borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: '#141820' }}>
                 <img src={item.src} alt={item.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -267,7 +267,7 @@ export default function HomePage({ setPage }) {
               <p style={{ color: '#7a7a84', maxWidth: 540, fontSize: 17 }}>Sin edición. Lo que ves es lo que hacemos en cada recogida y entrega.</p>
             </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20 }}>
+          <div className="video-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20 }}>
             {VIDEOS.map((v) => (
               <VideoCard key={v.src} src={v.src} poster={v.poster} title={v.title} text={v.text} />
             ))}
@@ -330,7 +330,7 @@ export default function HomePage({ setPage }) {
 
       {/* ── CONFIANZA + TESTIMONIOS ── */}
       <section style={{ padding: '80px 24px', background: '#10121a' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+        <div className="trust-grid" style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
           <div>
             <SectionLabel>Por qué elegirnos</SectionLabel>
             <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 'clamp(36px,4vw,52px)', color: '#f0ede8', marginBottom: 24, letterSpacing: 2, lineHeight: 1 }}>Tu moto en manos expertas</h2>

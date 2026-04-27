@@ -39,7 +39,7 @@ export default function ServiciosPage({ setPage }) {
       />
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '60px 24px' }}>
         {SERVICES.map((s, i) => (
-          <div key={i} style={{
+          <div key={i} className="service-row" style={{
             display: 'grid',
             gridTemplateColumns: i % 2 === 0 ? '2fr 1fr' : '1fr 2fr',
             gap: 40,
