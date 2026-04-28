@@ -6,7 +6,7 @@ export default function Footer({ setPage }) {
   return (
     <footer style={{ background: '#0a0b10', borderTop: '1px solid rgba(200,168,75,0.1)', padding: '48px 24px 24px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 40, marginBottom: 40 }}>
+        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 40, marginBottom: 40 }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
               <BrandMark size={36} />

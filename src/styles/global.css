@@ -1,11 +1,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   background: #0d0f14;
   color: #f0ede8;
   font-family: 'Barlow', sans-serif;
   font-size: 16px;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0d0f14; }
@@ -143,6 +144,12 @@ button { font-family: 'Barlow', sans-serif; }
   .contact-grid {
     grid-template-columns: 1fr !important;
   }
+
+  /* Footer 4-col → 2-col */
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+  }
 }
 
 @media (max-width: 640px) {
@@ -181,6 +188,13 @@ button { font-family: 'Barlow', sans-serif; }
 
   /* Contact 3-col → 1-col */
   .contact-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Footer 2-col → 1-col */
+  .footer-grid {
     grid-template-columns: 1fr !important;
   }
 }
