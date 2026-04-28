@@ -24,7 +24,7 @@ const SERVICES = [
   },
   {
     title: 'Servicios complementarios', icon: 'map', color: RED,
-    img: '/images/quads.jpg',
+    img: '/images/quads-v2.jpg',
     desc: 'Coordinación con servicios de venta de motos y recambios, para que todo el proceso logístico se gestione desde un único interlocutor.',
     items: ['Recepción y entrega en campas o almacenes', 'Coordinación de plazos con compraventas', 'Asesoramiento logístico'],
   },
